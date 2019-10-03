@@ -1,0 +1,11 @@
+web-search {
+  display: flex;
+
+  .web-search__input {
+    width: 100%;
+  }
+}
+
+web-search[expanded] {
+  flex: 1 0;
+}

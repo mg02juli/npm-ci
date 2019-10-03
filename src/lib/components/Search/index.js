@@ -6,9 +6,9 @@ import {html} from "lit-element";
 import {BaseElement} from "../BaseElement";
 import algoliasearch from "algoliasearch/dist/algoliasearchLite";
 
-const applicationID = "latency";
-const apiKey = "249078a3d4337a8231f1665ec5a44966";
-const indexName = "bestbuy";
+const applicationID = "2JPAZHQ6K7";
+const apiKey = "01ca870a3f1cad9984ed72419a12577c";
+const indexName = "webdev";
 const client = algoliasearch(applicationID, apiKey);
 const index = client.initIndex(indexName);
 
@@ -19,7 +19,10 @@ const index = client.initIndex(indexName);
  */
 class Search extends BaseElement {
   static get properties() {
-    return {hits: {type: Object}};
+    return {
+      expanded: {type: Boolean, reflect: true},
+      hits: {type: Object},
+    };
   }
 
   constructor() {
@@ -40,14 +43,27 @@ class Search extends BaseElement {
     })();
   }
 
+  onFocus() {
+    this.dispatchEvent(new CustomEvent("expand"));
+    this.expanded = true;
+  }
+
+  onBlur() {
+    this.dispatchEvent(new CustomEvent("collapse"));
+    this.expanded = false;
+  }
+
   render() {
     return html`
       <div>
         <input
+          class="web-search__input"
           type="text"
           autocomplete="off"
           role="search"
           @keyup=${this.onKeyUp}
+          @focus=${this.onFocus}
+          @blur=${this.onBlur}
         />
         ${this.hitsTemplate}
       </div>
@@ -62,7 +78,9 @@ class Search extends BaseElement {
             <ul>
               ${this.hits.map(
                 (hit) => html`
-                  <li>${hit.name}</li>
+                  <li>
+                    <a href="${hit.url}">${hit.title}</a>
+                  </li>
                 `,
               )}
             </ul>

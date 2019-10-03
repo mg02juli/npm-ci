@@ -24,6 +24,15 @@ class Header extends HTMLElement {
   connectedCallback() {
     this.hamburgerBtn = this.querySelector(".web-header__hamburger-btn");
     this.hamburgerBtn.addEventListener("click", expandSideNav);
+
+    this.links = this.querySelector(".web-header__links");
+    this.search = this.querySelector("web-search");
+    this.search.addEventListener("expand", () => {
+      this.links.style.display = "none";
+    });
+    this.search.addEventListener("collapse", () => {
+      this.links.style.display = "flex";
+    });
   }
 
   /**
