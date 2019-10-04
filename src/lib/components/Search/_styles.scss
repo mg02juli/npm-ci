@@ -1,11 +1,61 @@
+@import '../../../styles/settings/colors';
+
 web-search {
   display: flex;
+  min-width: 50%;
 
   .web-search__input {
-    width: 100%;
+    width: calc(200% - 48px - 16px);
+    max-width: calc(200% - 48px - 16px);
+    min-width: calc(200% - 48px - 16px);
+    background: #F1F3F4;
+    border: none;
+    transition: .2s transform;
+    transform: translateX(calc(50% - 200px + 48px));
+  }
+
+  .web-search__input:focus {
+    border: none;
+    padding: 7px; // devsite override
+  }
+
+  .web-search-popout {
+    background: white;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15);
+    left: calc(48px + 16px);
+    position: absolute;
+    top: 55px;
+    width: calc(100% - 48px - 16px);
+    padding: 16px 0;
+  }
+
+  .web-search-popout__heading {
+    color: $GREY_700;
+    font-size: 12px;
+    padding: 0 24px;
+  }
+
+  .web-search-popout__list {
+    list-style: none;
+    max-height: 50vh;
+    overflow: scroll;
+  }
+
+  .web-search-popout__link {
+    padding: 8px 24px;
+    display: block;
+    color: $PRIMARY_TEXT_COLOR;
+  }
+
+  .web-search-popout__link:hover,
+  .web-search-popout__link--active {
+    background: $GREY_200;
   }
 }
 
 web-search[expanded] {
-  flex: 1 0;
+  .web-search__input {
+    transform: translate(calc(-50% + 48px - 16px));
+  }
 }
